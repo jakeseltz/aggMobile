@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('MyApp.controllers').controller('LoginCtrl', 
-  function($scope, $state, $ionicLoading, Auth, User) {
+  function($scope, $state, $ionicLoading, Auth, User,$rootScope) {
     $scope.user = {
       email: '',
       password: ''
@@ -21,11 +21,17 @@ angular.module('MyApp.controllers').controller('LoginCtrl',
           .catch(handleError);
     };
 
+    $scope.logout = function(){
+      Auth.logout();
+
+    }
+
+
     function redirectBasedOnStatus() {
       $ionicLoading.hide();
       
-      if (User.hasChangedPassword()) {
-        $state.go('app.dashboard');
+      if (!User.hasChangedPassword()) {
+        $state.go('tab.behaviors');
       } else {
         $state.go('change-password');
       }

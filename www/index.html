@@ -8,16 +8,24 @@
     <link href="myapp.css" rel="stylesheet">
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/firebase/firebase.js"></script>
-    <script src="lib/firebase/angularfire.min.js"></script>
-    <script src="lib/firebase/firebase-simple-login.js"></script>
+<!--    <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/firebase/dist/angularfire.min.js"></script>-->
+    <!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+<!-- Firebase Simple Login -->
+<script src="https://cdn.firebase.com/js/simple-login/1.6.2/firebase-simple-login.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js"></script>
+
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <script src="app.js"></script>
+
     <script src="auth/auth-service.js"></script>
     <script src="user/user-service.js"></script>
+    <script src="controllers/controllers.js"></script>
     <script src="signup/signup-service.js"></script>
     <script src="sidemenu/sidemenu-controller.js"></script>
     <script src="signup/signup-controller.js"></script>
@@ -25,6 +33,10 @@
     <script src="reset-password/reset-password-controller.js"></script>
     <script src="change-password/change-password-controller.js"></script>
     <script src="dashboard/dashboard-controller.js"></script>
+        <script src="angularfire/config.js"></script>
+    <script src="angularfire/firebase.utils.js"></script>
+    <script src="angularfire/simpleLogin.js"></script>
+
   </head>
 
   <body ng-app="MyApp">

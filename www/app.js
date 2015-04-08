@@ -2,10 +2,12 @@
 
 angular.module('MyApp', [
   'ionic',
-  'firebase',
   'MyApp.services',
   'MyApp.directives',
-  'MyApp.controllers'
+  'MyApp.controllers',
+      'firebase',
+    'firebase.utils',
+    'simpleLogin'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   var resolve = {
@@ -36,22 +38,13 @@ angular.module('MyApp', [
   };
 
   $stateProvider
-    .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'sidemenu/sidemenu.html',
-      controller: 'SideMenuCtrl'
-    })
+
     .state('signup', {
       url: '/signup',
       templateUrl: 'signup/signup.html',
       controller: 'SignupCtrl'
     })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'login/login.html',
-      controller: 'LoginCtrl'
-    })
+
     .state('reset-password', {
       url: '/reset-password',
       templateUrl: 'reset-password/reset-password.html',
@@ -63,18 +56,98 @@ angular.module('MyApp', [
       controller: 'ChangePasswordCtrl',
       resolve: resolve
     })
-    .state('app.dashboard', {
-      url: '/dashboard', 
+    
+    // setup an abstract state for the tabs directive
+    .state('tab', {
+    url: "/tab",
+    abstract: true,
+    templateUrl: "templates/tabs.html"
+  })
+
+  // Each tab has its own nav history stack:
+
+  .state('tab.dash', {
+    url: '/dash',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'DashCtrl'
+      }
+    }
+  })
+
+  .state('tab.chats', {
+      url: '/chats',
       views: {
-        menuContent: {
-          templateUrl: 'dashboard/dashboard.html',
-          controller: 'DashboardCtrl',
-          resolve: resolve
+        'tab-chats': {
+          templateUrl: 'templates/tab-chats.html',
+          controller: 'ChatsCtrl'
         }
       }
-    });
+    })
+    .state('tab.chat-detail', {
+      url: '/chats/:chatId',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/chat-detail.html',
+          controller: 'ChatDetailCtrl'
+        }
+      }
+    })
 
-  $urlRouterProvider.otherwise('/app/dashboard');
+  .state('tab.account', {
+    url: '/account',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  })
+.state('tab.behaviors', {
+      url: '/behaviors',
+      views: {
+        'tab-behaviors': {
+          templateUrl: 'templates/tab-behaviors.html',
+          controller: 'BehaviorsCtrl'
+          
+        }
+      }
+    })
+    .state('tab.progress', {
+      url: '/progress', 
+      views: {
+        'tab-progress': {
+          templateUrl: 'templates/tab-progress.html',
+          controller: 'ProgressCtrl'
+        }
+      }
+    })
+
+  .state('tab.messages', {
+    url: '/messages',
+
+    views: {
+      'tab-messages': {
+        templateUrl: 'templates/tab-messages.html',
+        controller: 'MessageCtrl'
+      }
+    }
+  })
+
+    .state('tab.login', {
+    url: '/login',
+    views: {
+      'tab-login': {
+        templateUrl: 'templates/tab-login.html',
+        controller: 'LoginCtrl'
+      }
+    }
+  })
+
+
+
+  $urlRouterProvider.otherwise('/tab/login');
 })
 .run(function($rootScope, $state, $ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -95,7 +168,7 @@ angular.module('MyApp', [
     });
   });
 })
-.constant('FIREBASE_ROOT', 'https://myapp.firebaseio.com');
+.constant('FIREBASE_ROOT', 'https://aggresstest3356.firebaseio.com');
 
 angular.module('MyApp.services', []);
 angular.module('MyApp.directives', []);
